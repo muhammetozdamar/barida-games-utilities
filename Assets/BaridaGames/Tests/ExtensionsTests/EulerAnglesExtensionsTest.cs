@@ -1,25 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using BaridaGames.Utilities.Extensions;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
+using UnityEngine.TestTools.Utils;
 
 public class EulerAnglesExtensionsTest
 {
-    // A Test behaves as an ordinary method
     [Test]
     public void EulerAnglesExtensionsTestSimplePasses()
     {
-        // Use the Assert class to test conditions
-    }
+        GameObject gameObject = new GameObject();
+        Transform transform = gameObject.transform;
+        transform.Rotate(270f, 90f, 0f, Space.World);
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator EulerAnglesExtensionsTestWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
+        Assert.AreEqual(-90f, transform.eulerAngles.x.ArrangeAngle());
+        Assert.AreEqual(90f, transform.eulerAngles.y.ArrangeAngle());
+        Assert.AreEqual(0f, transform.eulerAngles.z.ArrangeAngle());
+
+        Assert.That(transform.eulerAngles.ArrangeAngle(), Is.EqualTo(new Vector3(-90f, 90f, 0f)).Using(Vector3EqualityComparer.Instance));
+
+        transform.rotation = Quaternion.identity;
+        transform.Rotate(360f, 0f, 0f, Space.World);
+
+        Assert.That(transform.eulerAngles.x.ArrangeAngle(), Is.EqualTo(0f).Using(FloatEqualityComparer.Instance));
+        Assert.That(transform.eulerAngles.ArrangeAngle(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(Vector3EqualityComparer.Instance));
     }
 }

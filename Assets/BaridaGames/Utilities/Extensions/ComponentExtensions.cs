@@ -11,7 +11,9 @@ namespace BaridaGames.Utilities.Extensions
 
         public static T GetOrAddComponent<T>(this Component component) where T : Component
         {
-            return component.GetComponent<T>() ?? component.AddComponent<T>();
+            T comp = component.GetComponent<T>();
+            if (comp != null) return comp;
+            return component.AddComponent<T>();
         }
 
         public static bool HasComponent<T>(this Component component) where T : Component

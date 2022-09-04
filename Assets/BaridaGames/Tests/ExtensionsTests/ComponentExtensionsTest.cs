@@ -1,25 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using BaridaGames.Utilities.Extensions;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 public class ComponentExtensionsTest
 {
-    // A Test behaves as an ordinary method
     [Test]
     public void ComponentExtensionsTestSimplePasses()
     {
-        // Use the Assert class to test conditions
-    }
+        GameObject gameObject = new GameObject("GameObject", typeof(BoxCollider), typeof(Rigidbody));
+        BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
+        Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator ComponentExtensionsTestWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
+        Assert.IsTrue(boxCollider.HasComponent<Rigidbody>());
+        Assert.IsTrue(rigidbody.HasComponent<BoxCollider>());
+
+        Assert.IsFalse(boxCollider.HasComponent<SphereCollider>());
+        Assert.IsFalse(rigidbody.HasComponent<CapsuleCollider>());
+
+        Assert.NotNull(boxCollider.AddComponent<MeshFilter>());
+
+        Assert.NotNull(rigidbody.GetOrAddComponent<MeshFilter>());
+        Assert.NotNull(rigidbody.GetOrAddComponent<MeshRenderer>());
+
+        Assert.IsTrue(boxCollider.HasComponent<MeshRenderer>());
     }
 }

@@ -1,25 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using BaridaGames.Utilities.Extensions;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 public class GameObjectExtensionsTest
 {
-    // A Test behaves as an ordinary method
     [Test]
     public void GameObjectExtensionsTestSimplePasses()
     {
-        // Use the Assert class to test conditions
-    }
+        GameObject gameObject = new GameObject("GameObject", typeof(BoxCollider));
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator GameObjectExtensionsTestWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
+        Assert.IsTrue(gameObject.HasComponent<BoxCollider>());
+        Assert.IsFalse(gameObject.HasComponent<Rigidbody>());
+
+        Assert.IsNotNull(gameObject.GetOrAddComponent<BoxCollider>());
+
+        Assert.IsNotNull(gameObject.GetOrAddComponent<Rigidbody>());
+        Assert.IsTrue(gameObject.HasComponent<Rigidbody>());
     }
 }

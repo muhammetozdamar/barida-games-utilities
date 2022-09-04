@@ -1,25 +1,39 @@
-using System.Collections;
+using BaridaGames.Utilities.Extensions;
 using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 public class ListExtensionsTest
 {
-    // A Test behaves as an ordinary method
+    private const int SHUFFLE_ITERATION_AMOUNT = 500;
     [Test]
     public void ListExtensionsTestSimplePasses()
     {
-        // Use the Assert class to test conditions
-    }
+        List<float> floats = new List<float>();
+        floats.Add(69f);
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator ListExtensionsTestWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
+        Assert.AreEqual(69f, floats.GetRandomItem());
+
+        Assert.AreEqual(69f, floats.PopFirst());
+
+        floats.Add(420f);
+        Assert.AreEqual(420f, floats.PopLast());
+
+        floats.PushFirst(69f);
+        Assert.AreEqual(69f, floats[0]);
+
+        floats.PushLast(420f);
+        Assert.AreEqual(420f, floats[floats.Count - 1]);
+
+        floats.Swap(0, 1);
+        Assert.AreEqual(420f, floats[0]);
+        Assert.AreEqual(69f, floats[floats.Count - 1]);
+
+        bool shuffled = false;
+        for (int i = 0; i < SHUFFLE_ITERATION_AMOUNT; i++)
+        {
+            floats.Shuffle();
+            shuffled |= (floats[0] == 69f);
+        }
+        Assert.IsTrue(shuffled);
     }
 }
