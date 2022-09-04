@@ -10,5 +10,26 @@ namespace BaridaGames.Utilities.Extensions
             bool upperResult = upperExclusive ? value.CompareTo(upperBound) < 0 : value.CompareTo(upperBound) <= 0;
             return lowerResult && upperResult;
         }
+
+        public static float LinearRemap(this float value,
+                                     float valueRangeMin, float valueRangeMax,
+                                     float newRangeMin, float newRangeMax)
+        {
+            return (value - valueRangeMin) / (valueRangeMax - valueRangeMin) * (newRangeMax - newRangeMin) + newRangeMin;
+        }
+
+        public static int LinearRemap(this int value,
+                                     int valueRangeMin, int valueRangeMax,
+                                     int newRangeMin, int newRangeMax)
+        {
+            return (value - valueRangeMin) / (valueRangeMax - valueRangeMin) * (newRangeMax - newRangeMin) + newRangeMin;
+        }
+
+        public static double LinearRemap(this double value,
+                                     double valueRangeMin, double valueRangeMax,
+                                     double newRangeMin, double newRangeMax)
+        {
+            return (value - valueRangeMin) / (valueRangeMax - valueRangeMin) * (newRangeMax - newRangeMin) + newRangeMin;
+        }
     }
 }
