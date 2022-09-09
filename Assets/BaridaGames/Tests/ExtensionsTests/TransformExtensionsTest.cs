@@ -63,5 +63,42 @@ public class TransformExtensionsTest
         Assert.AreEqual(3, transform.childCount);
         transform.DestroyChildren(true);
         Assert.AreEqual(0, transform.childCount);
+
+        GameObject child04 = new GameObject();
+        child04.transform.SetParent(transform);
+        child04.transform.localPosition = new Vector3(0, 0, 0);
+
+        child04.transform.SetLocalXPosition(10f);
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(10f, 0f, 0f)).Using(comparer));
+
+        child04.transform.SetLocalYPosition(10f);
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(10f, 10f, 0f)).Using(comparer));
+
+        child04.transform.SetLocalZPosition(10f);
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(10f, 10f, 10f)).Using(comparer));
+
+        child04.transform.ModifyLocalXPosition(-1f);
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(9f, 10f, 10f)).Using(comparer));
+
+        child04.transform.ModifyLocalYPosition(1f);
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(9f, 11f, 10f)).Using(comparer));
+
+        child04.transform.ModifyLocalZPosition(0f);
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(9f, 11f, 10f)).Using(comparer));
+
+        child04.transform.ResetLocalPosition();
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
+
+        child04.transform.localRotation = new Quaternion(0.1f, 0.2f, 0.3f, 1);
+        child04.transform.ResetLocalRotation();
+        Assert.That(child04.transform.localRotation, Is.EqualTo(Quaternion.identity).Using(QuaternionEqualityComparer.Instance));
+
+        child04.transform.localPosition = new Vector3(1f, 2f, 3f);
+        child04.transform.localRotation = new Quaternion(0.1f, 0.2f, 0.3f, 1);
+        child04.transform.localScale = new Vector3(2f, 2f, 2f);
+        child04.transform.ResetLocal();
+        Assert.That(child04.transform.localPosition, Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(comparer));
+        Assert.That(child04.transform.localRotation, Is.EqualTo(Quaternion.identity).Using(QuaternionEqualityComparer.Instance));
+        Assert.That(child04.transform.localScale, Is.EqualTo(new Vector3(1f, 1f, 1f)).Using(comparer));
     }
 }

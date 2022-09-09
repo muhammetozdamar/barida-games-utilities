@@ -23,5 +23,11 @@ public class EulerAnglesExtensionsTest
 
         Assert.That(transform.eulerAngles.x.ArrangeAngle(), Is.EqualTo(0f).Using(FloatEqualityComparer.Instance));
         Assert.That(transform.eulerAngles.ArrangeAngle(), Is.EqualTo(new Vector3(0f, 0f, 0f)).Using(Vector3EqualityComparer.Instance));
+
+        transform.rotation = Quaternion.identity;
+        transform.Rotate(-270f, -90f, 0f, Space.World);
+        Assert.That(transform.eulerAngles.x.NormalizeAngle(), Is.EqualTo(90f).Using(FloatEqualityComparer.Instance));
+        Assert.That(transform.eulerAngles.y.NormalizeAngle(), Is.EqualTo(270f).Using(FloatEqualityComparer.Instance));
+
     }
 }

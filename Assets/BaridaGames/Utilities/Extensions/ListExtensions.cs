@@ -35,17 +35,17 @@ namespace BaridaGames.Utilities.Extensions
             return element;
         }
 
-        public static void PushFirst<T>(this IList<T> list, T element)
-        {
-            list.Insert(0, element);
-        }
-
         public static T PopLast<T>(this IList<T> list)
         {
             int lastIndex = list.Count - 1;
             T element = list[lastIndex];
             list.RemoveAt(lastIndex);
             return element;
+        }
+
+        public static void PushFirst<T>(this IList<T> list, T element)
+        {
+            list.Insert(0, element);
         }
 
         public static void PushLast<T>(this IList<T> list, T element)
