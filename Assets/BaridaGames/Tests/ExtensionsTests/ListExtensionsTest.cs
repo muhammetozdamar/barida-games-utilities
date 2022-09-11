@@ -35,5 +35,16 @@ public class ListExtensionsTest
             shuffled |= (floats[0] == 69f);
         }
         Assert.IsTrue(shuffled);
+
+        floats.Clear();
+        floats.Add(-420);
+        floats.Add(10);
+        floats.Add(11);
+        floats.Add(12);
+        floats.Add(13);
+        floats.Add(69);
+
+        Assert.AreEqual(-420, floats.Min(), float.Epsilon);
+        Assert.AreEqual(69, floats.Max(), float.Epsilon);
     }
 }

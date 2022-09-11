@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Random = System.Random;
 namespace BaridaGames.Utilities.Extensions
@@ -26,6 +27,34 @@ namespace BaridaGames.Utilities.Extensions
             T temp = list[i];
             list[i] = list[j];
             list[j] = temp;
+        }
+
+        public static T Max<T>(this IList<T> list) where T : IComparable<T>
+        {
+            int n = list.Count;
+            T max = list[0];
+            for (int i = 1; i < n; i++)
+            {
+                if (list[i].CompareTo(max) > 0)
+                {
+                    max = list[i];
+                }
+            }
+            return max;
+        }
+
+        public static T Min<T>(this IList<T> list) where T : IComparable<T>
+        {
+            int n = list.Count;
+            T min = list[0];
+            for (int i = 1; i < n; i++)
+            {
+                if (list[i].CompareTo(min) < 0)
+                {
+                    min = list[i];
+                }
+            }
+            return min;
         }
 
         public static T PopFirst<T>(this IList<T> list)
